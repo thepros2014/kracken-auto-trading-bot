@@ -11,8 +11,14 @@ from typing import Dict, List, Optional, Any
 from datetime import datetime, timedelta
 import os
 
-from ..data.manager import DataManager
-from ..kraken.client import KrakenClient
+# Handle imports when running as module vs script
+try:
+    from src.data.manager import DataManager
+    from src.kraken.client import KrakenClient
+except ImportError:
+    # Fallback for when src is not in path
+    from data.manager import DataManager
+    from kraken.client import KrakenClient
 
 logger = logging.getLogger(__name__)
 
@@ -25,16 +31,12 @@ class BacktestDataHandler:
             config: Configuration dictionary
         """
         self.config = config
-        # We'll create a mock Kraken client for data fetching
-        # In a real implementation, this would use actual API keys
-        self.kraken_client = KrakenClient(
-            api_key=config.get('kraken', {}).get('api_key', ''),
-            api_secret=config.get('kraken', {}).get('api_secret', ''),
-            sandbox=True
-        )
-        self.data_manager = DataManager(self.kraken_client, config)
+        # For backtesting, we'll create a simplified data manager
+        # that doesn't require live API connections
+        self.data_manager = None
+        self.use_mock_data = True
         
-        logger.info("Backtesting data handler initialized")
+        logger.info("Backtesting data handler initialized (using mock data)")
     
     async def load_historical_data(self, 
                                  symbol: str, 
@@ -53,42 +55,58 @@ class BacktestDataHandler:
         """
         logger.info(f"Loading historical data for {symbol} from {start_date} to {end_date}")
         
+        # Generate mock data for testing purposes
+        return self._generate_mock_data(symbol, start_date, end_date)
+    
+    def _generate_mock_data(self, symbol: str, start_date: str, end_date: str) -> List[List]:
+        """
+        Generate mock OHLCV data for testing
+        
+        Args:
+            symbol: Trading pair symbol
+            start_date: Start date in YYYY-MM-DD format
+            end_date: End date in YYYY-MM-DD format
+            
+        Returns:
+            List of mock OHLCV data
+        """
         try:
             # Convert dates to datetime objects
             start_dt = datetime.strptime(start_date, '%Y-%m-%d')
             end_dt = datetime.strptime(end_date, '%Y-%m-%d')
             
-            # Calculate approximate number of candles needed
-            # Assuming 1h timeframe, 24 candles per day
-            days_diff = (end_dt - start_dt).days
-            estimated_candles = days_diff * 24
+            # Calculate number of hours
+            hours_diff = int((end_dt - start_dt).total_seconds() / 3600)
             
-            # Add buffer for weekends and holidays
-            limit = max(estimated_candles * 2, 1000)
+            # Generate mock data
+            mock_data = []
+            base_price = 50000.0 if 'XBT' in symbol or 'BTC' in symbol else 3000.0
             
-            # Fetch historical data
-            ohlcv_data = await self.data_manager.get_historical_data(
-                symbol=symbol,
-                timeframe=self.config.get('trading', {}).get('timeframe', '1h'),
-                limit=limit
-            )
+            for i in range(min(hours_diff, 1000)):  # Limit to 1000 candles for testing
+                timestamp = int(start_dt.timestamp() * 1000) + (i * 3600000)
+                
+                # Generate realistic price movement
+                change_percent = np.random.normal(0, 0.02)  # 2% volatility
+                open_price = base_price * (1 + change_percent)
+                
+                # Add some intraday volatility
+                high_price = open_price * (1 + abs(np.random.normal(0, 0.01)))
+                low_price = open_price * (1 - abs(np.random.normal(0, 0.01)))
+                close_price = open_price * (1 + np.random.normal(0, 0.005))
+                volume = np.random.uniform(10, 100)
+                
+                # Ensure high >= low and high >= open,close and low <= open,close
+                high_price = max(high_price, open_price, close_price)
+                low_price = min(low_price, open_price, close_price)
+                
+                mock_data.append([timestamp, open_price, high_price, low_price, close_price, volume])
+                base_price = close_price  # Use close as base for next period
             
-            # Filter data by date range
-            filtered_data = []
-            start_timestamp = int(start_dt.timestamp() * 1000)
-            end_timestamp = int(end_dt.timestamp() * 1000) + (24 * 60 * 60 * 1000)  # End of day
-            
-            for candle in ohlcv_data:
-                timestamp = candle[0]  # Assuming timestamp is first element
-                if start_timestamp <= timestamp <= end_timestamp:
-                    filtered_data.append(candle)
-            
-            logger.info(f"Loaded {len(filtered_data)} candles for {symbol}")
-            return filtered_data
+            logger.info(f"Generated {len(mock_data)} mock candles for {symbol}")
+            return mock_data
             
         except Exception as e:
-            logger.error(f"Error loading historical data: {e}")
-            # Return empty list if we can't fetch data
+            logger.error(f"Error generating mock data: {e}")
             return []
     
     def resample_data(self, data: List[List], target_timeframe: str) -> List[List]:

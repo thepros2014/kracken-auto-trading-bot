@@ -1,0 +1,67 @@
+# 🔧 Kraken Trading Bot - Live Trading Configuration Template
+# 
+# INSTRUCTIONS:
+# 1. Copy this file to: ../config/config.yaml
+# 2. Replace placeholder values with your actual settings
+# 3. NEVER commit this file with real API keys to version control!
+# 4. Consider using environment variables for sensitive data (see .env_template)
+
+# Exchange Settings - CRITICAL FOR LIVE TRADING
+kraken:
+  api_key: "YOUR_KRAKEN_API_KEY_HERE"          # Get from: https://www.kraken.com/features/api
+  api_secret: "YOUR_KRAKEN_API_SECRET_HERE"    # Keep this SECRET!
+  sandbox: false                               # MUST be false for live trading (real money)
+  rate_limit: 1200                             # Milliseconds between API requests (respect Kraken limits)
+
+# Trading Strategy Settings
+trading:
+  default_pair: "XBT/USD"                      # Trading pair (e.g., XBT/USD, ETH/USD, ADA/USD)
+  timeframe: "1h"                              # Chart timeframe: 1m, 5m, 15m, 30m, 1h, 4h, 1d
+  max_positions: 3                             # Maximum number of concurrent open positions
+  position_size_percent: 5.0                   # % of available balance to use per trade (START LOW: 2.0 for beginners)
+  stop_loss_percent: 3.0                       # Automatic stop loss percentage (set to 0 to disable)
+  take_profit_percent: 6.0                     # Automatic take profit percentage (set to 0 to disable)
+  leverage: 1                                  # Leverage multiplier (1 = spot trading, >1 = futures/margin)
+
+# Risk Management Settings
+risk:
+  max_daily_loss_percent: 10.0                 # Stop trading for the day if loss exceeds this % (SET TO PROTECT CAPITAL)
+  max_consecutive_losses: 5                    # Pause strategy after N consecutive losing trades
+  max_drawdown_percent: 15.0                   # Maximum allowable drawdown from peak equity before stopping
+  max_position_age_hours: 24                   # Maximum time to hold a position (0 = no limit)
+
+# Backtest Settings (for strategy development - not used in live trading)
+backtest:
+  initial_balance: 10000.0                     # Starting balance for backtesting simulations
+  commission_percent: 0.26                     # Kraken taker fee percentage
+  slippage_percent: 0.1                        # Estimated slippage percentage
+  max_trades_per_day: 100                      # Maximum trades per day in simulation
+
+# Notification Settings
+notifications:
+  telegram_enabled: true                       # Enable Telegram notifications
+  telegram_bot_token: "YOUR_TELEGRAM_BOT_TOKEN_HERE"  # Get from @BotFather on Telegram
+  telegram_admin_users: "123456789,987654321" # Comma-separated list of Telegram user IDs to notify
+  
+  email_enabled: false                         # Enable email notifications (requires SMTP setup)
+  email_smtp_server: "smtp.gmail.com"
+  email_smtp_port: 587
+  email_username: "your_email@gmail.com"
+  email_password: "your_app_password_here"
+  email_recipients: "alerts@yourdomain.com"
+
+# Logging Settings
+logging:
+  level: "INFO"                                # DEBUG, INFO, WARNING, ERROR, CRITICAL
+  file_enabled: true                           # Log to files
+  console_enabled: true                        # Log to console
+  max_file_size_mb: 10                         # Rotate logs when they reach this size
+  backup_count: 5                              # Number of backup log files to keep
+
+# Advanced Settings (usually don't need to change)
+advanced:
+  order_timeout_seconds: 30                    # How long to wait for order execution
+  retry_attempts: 3                            # Number of times to retry failed API calls
+  retry_delay_seconds: 5                       # Delay between retry attempts
+  enable_trailing_stop: false                  # Enable trailing stop loss (experimental)
+  trailing_stop_percent: 2.0                   # Trailing stop distance from peak price

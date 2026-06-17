@@ -1,0 +1,413 @@
+# =============================================================================
+# .gitignore for Kraken Trading Bot
+# =============================================================================
+# This file specifies which files and directories should be ignored by Git
+# Add this to your repository root to keep your repo clean and secure
+
+# =============================================================================
+# OS and Editor Files
+# =============================================================================
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+*.lnk
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Linux
+*~
+
+# Edors and IDEs
+.vscode/
+.idea/
+*.sublime-workspace
+*.sublime-project
+*.tmproj
+*.swo
+*.swn
+*~
+.nbproject/
+*.launch
+.settings/
+.classpath
+.project
+
+# =============================================================================
+# Logs and Temporary Files
+# =============================================================================
+logs/
+*.log
+*.tmp
+*.temp
+*.bak
+*.swp
+*~
+.temp/
+tmp/
+temp/
+.cache/
+.caches/
+
+# Python Specific
+# =============================================================================
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# C extensions
+*.so
+
+# Distribution / packaging
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# PyInstaller
+#  Usually these files are written by a python script from a template
+#  before PyInstaller builds the exe, so as to inject date/other infos into it.
+*.manifest
+*.spec
+
+# Installer logs
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Unit test / coverage reports
+htmlcov/
+.tox/
+.nox/
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+*.py,cover
+.hypothesis/
+.pytest_cache/
+cover/
+
+# Environments
+.env
+.venv
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+pip-selfcheck.json
+
+# Jupyter Notebook
+.ipynb_checkpoints
+
+# IPython
+profile_default/
+ipython_config.py
+
+# pyenv
+.python-version
+
+# pipenv
+#   According to pypa.io, you should not use pipenv to manage your own projects
+#   and there are separate recommendations for pipenv & virtualenv.
+Pipfile
+Pipfile.lock
+
+# Poetry
+#   Similar to Pipfile.lock, but for poetry.
+poetry.lock
+
+# pdm
+#   Similar to Pipfile.lock, but for pdm.
+pdm.lock
+
+# PEP 582; used by e.g. github.com/David-OConnor/pyflow and github.com/pdm-project/pdm
+__pypackages__/
+
+# Celery
+celerybeat-schedule
+celerybeat.pid
+
+# SageMath parsed files
+*.sage.py
+
+# Environments
+.env
+.venv
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+pip-selfcheck.json
+
+# Spyder project settings
+.spyderproject
+.spyproject
+
+# Rope project settings
+.ropeproject
+
+# mkdocs documentation
+/site
+
+# mypy
+.mypy_cache/
+.dmypy.json
+dmypy.json
+
+# Pyre type checker
+.pyre/
+
+# Pytype static type analyzer
+.pytype/
+
+# Cython debug symbols
+cython_debug
+
+# =============================================================================
+# Trading Bot Specific Files
+# =============================================================================
+# Environment and secrets (CRITICAL - never commit these!)
+.env
+.env.local
+.env.*.local
+config/secrets.yaml
+config/secrets.yml
+config/secrets.json
+
+# API keys and sensitive configuration
+*api_key*
+*api_secret*
+*secret*
+*token*
+*password*
+*credential*
+
+# Data files and caches
+data/
+*.csv
+*.xlsx
+*.xls
+*.json
+*.jsonl
+*.pkl
+*.pickle
+*.h5
+*.hdf5
+*.feather
+*.parquet
+*.avro
+*.orc
+*.sqlite
+*.sqlite3
+*.db
+*.jbl
+*.joblib
+
+# Model files (if using ML)
+*.model
+*.h5
+*.pb
+*.onnx
+*.ckpt
+*.pt
+*.pth
+
+# Backtesting results and caches
+backtest_results/
+backtest_cache/
+*.backtest
+*_results.json
+*_stats.json
+
+# Reports and exports
+reports/
+exports/
+*.pdf
+*.xlsx
+*.docx
+*.txt
+*.md
+*.html
+
+# Test artifacts
+.test*
+*_test.py
+test_*
+*/test*
+testing/
+test_reports/
+coverage/
+.coveragereport
+
+# Documentation builds
+docs/_build/
+site/
+*.epub
+*.mobi
+
+# =============================================================================
+# Trading Bot Specific Directories to Ignore
+# =============================================================================
+# Large data directories that shouldn't be versioned
+data/raw/
+data/processed/
+data/cache/
+data/temp/
+data/backup/
+
+# Model checkpoints and experiments
+models/
+experiments/
+runs/
+mlruns/
+
+# Log files (keep recent ones but don't version)
+logs/
+!logs/.gitkeep  # Keep the directory but not the contents
+
+# Cache directories
+.cache/
+.caches/
+__pycache__/
+*/__pycache__/*
+*/*.pyc
+*/*.pyo
+*/*.pyd
+
+# Temporary processing files
+tmp/
+temp/
+temp*/
+*/temp*
+*/tmp*
+*/tmp*/
+
+# IDE and editor specific
+.vscode/
+.idea/
+*.sublime-workspace
+*.sublime-project
+*.komodoproject
+
+# WebStorm
+.idea/
+*.iml
+
+# =============================================================================
+# Large Files and Binaries
+# =============================================================================
+# Executables and binaries
+*.exe
+*.dll
+*.so
+*.dylib
+*.app
+*.ipa
+*.msi
+*.deb
+*.rpm
+
+# Archives
+*.zip
+*.tar
+*.tar.gz
+*.tgz
+*.bz2
+*.tbz2
+*.xz
+*.txz
+*.7z
+*.rar
+
+# Media files (unless specifically part of the project)
+*.mp3
+*.mp4
+*.avi
+*.mov
+*.mkv
+*.flv
+*.wmv
+*.wav
+*.flac
+*.jpg
+*.jpeg
+*.png
+*.gif
+*.bmp
+*.tiff
+*.ico
+*.svg
+*.webp
+
+# Fonts
+*.ttf
+*.otf
+*.woff
+*.woff2
+*.eot
+
+# =============================================================================
+# Special Cases for This Project
+# =============================================================================
+# Large downloaded files (like the dotnet runtime from the initial scan)
+dotnet-runtime-*.exe
+*.msi
+*.exe
+
+# Jupyter notebook checkpoints
+.ipynb_checkpoints
+
+# Poetry
+poetry.lock
+
+# Node.js (if used)
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# =============================================================================
+# WHAT TO KEEP IN VERSION CONTROL
+# =============================================================================
+# Keep these even though they might match patterns above:
+# (Uncomment if you need to version specific files)
+
+# !secrets.yaml.example      # Example config file (without real secrets)
+# !config/example.yaml       # Example configuration
+# !requirements.txt          # Dependencies file
+# !README.md                 # Documentation
+# !LICENSE                   # License file
+# !.gitignore                # This file itself
+
+# Keep empty directories with .gitkeep files
+# !logs/.gitkeep
+# !data/.gitkeep
+# !models/.gitkeep
+# !experiments/.gitkeep
+
+# =============================================================================
+# END OF FILE
+# =============================================================================
