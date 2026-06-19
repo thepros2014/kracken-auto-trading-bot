@@ -30,8 +30,6 @@ kracken-bot/
 ├── tests/
 ├── docker/
 ├── requirements.txt
-├── Dockerfile
-├── docker-compose.yml
 └── README.md
 ```
 
@@ -56,11 +54,6 @@ kracken-bot/
 4. **Run the bot**
    ```bash
    python -m src.main
-   ```
-
-5. **Or use Docker**
-   ```bash
-   docker-compose up --build
    ```
 
 ## Configuration
@@ -103,11 +96,6 @@ flake8 src/
 ```
 
 ## Deployment
-
-### Docker
-```bash
-docker-compose up -d
-```
 
 ### Manual Deployment
 Ensure Python 3.9+ is installed, then:
