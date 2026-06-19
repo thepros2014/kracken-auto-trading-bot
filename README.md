@@ -10,7 +10,6 @@ An automated trading bot for Kraken.com with Telegram integration and self-learn
 - **Risk Management**: Position sizing, stop-loss, take-profit, daily limits
 - **Multi-pair Support**: Configurable strategies per trading pair
 - **Backtesting**: Validate strategies before live deployment
-- **Docker Ready**: Easy deployment with containerization
 
 ## Project Structure
 
