@@ -36,6 +36,9 @@ $RECYCLE.BIN/
 .settings/
 .classpath
 .project
+.blackboxcli
+.blackbox
+
 
 # =============================================================================
 # Logs and Temporary Files
